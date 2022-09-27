@@ -19,11 +19,11 @@ You will need to pull Spotify data for 20 of your favorite artists.  For each ar
 
 You will start out by using the Spotify API to get your data.  To make your life easier, you can use the existing Python package called `spotipy`.  This is not a requirement, however.  If you prefer, you can use the `requests` module, or any method you like to pull down the data.  We just ask that you do this using Python.
 
-As a hint, we are including the following `spotipy` functions which you can use to get this data from the API if you choose.
+As a hint, we are including the following `spotipy` functions which you can use to get this data from the API if you choose.  *Please not that you do **not** have to use these functions in this manner.  You are welcome to explore the spotify API and pull down your data using differnt methods if you choose.  We are just providing these as a starting point / hint.*  
 
 **Artist** https://spotipy.readthedocs.io/en/master/#spotipy.client.Spotify.search  
 **Album** https://spotipy.readthedocs.io/en/master/#spotipy.client.Spotify.artist_albums  
-*When using the above function, be sure to filter by country = 'US' to make your search more direct.  Failure to do so can result in a number of foreign language versions of albums*  
+*When using the above function, be sure to filter by country = 'US' (or another country if the artist is not US based) to make your search more direct.  Failure to do so can result in a number of foreign language versions of albums*  
 **Track** https://spotipy.readthedocs.io/en/master/#spotipy.client.Spotify.album_tracks  
 **Track_Feature** https://spotipy.readthedocs.io/en/master/#spotipy.client.Spotify.audio_features  
 
@@ -34,7 +34,8 @@ Your output data for this project is expected to be deduplicated, consistent, an
 Another key point is that the API will sometimes provide multiple data points when you only want to store one.  For instance, if you do an artist search, the API could provide any number of genres.  Since we are only storing one of them in the database, you need to consider how to pull out just the first value. An example of this is the artist, Foo Fighters, has 6 genres listed.  However, for simplicity we are only storing one value.  In this example, you would just grab the first genre value which is "alternative metal."
 
 ### Storage
-After your data is transformed and you are confident in it's quality, you need to insert it into your database.  There are many ways to do this, but Pandas contains some useful [functions](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.to_sql.html) that can make this easier for you.  You could also opt to use built in SQLite3 [functions](https://www.sqlitetutorial.net/sqlite-python/insert/) to do this.  You will need to create a SQLite database and create tables to store your data in.  There are an endless number of data points provided by spotify, so you will be directed on which data fields to store and in which format:
+After your data is transformed and you are confident in it's quality, you need to insert it into your database.  There are many ways to do this, but Pandas contains some useful [functions](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.to_sql.html) that can make this easier for you.  You could also opt to use built in SQLite3 [functions](https://www.sqlitetutorial.net/sqlite-python/insert/) to do this.  You will need to create a SQLite database and create tables to store your data in.  There are an endless number of data points provided by spotify, so you will be directed on which data fields to store and in which format:  
+*Please note that sometimes SQLite will change types unexpectedly.  I.e. you create a column with a VARCHAR type but later on it appears as a TEXT type.  You will not lose points for this as long as your data types are withing the correct class (text, int, real, blob).  Please review this page for a primer on this https://www.sqlitetutorial.net/sqlite-data-types/*  
 
 #### Artist
 
@@ -95,20 +96,20 @@ After your data is transformed and you are confident in it's quality, you need t
 ### Analytics / Visualisation
 It is not enough to take data and store it in a database, you have to consider how to make it useful to others.  At this point in the project, you should have 4 tables in your database.  Think about how to effectively join this data together.  You will create a series of views to make the data easier to work with.  In terms of implementation and specifics, this will be on you.  Think about how to make the data as clear as possible.  Which fields should you include and in what order?  Expect to use aggregation and joins a lot during this section.
 As a minimum, you should create views based on the following 3 prompts:
-- Top songs by artist in terms of duration_ms
-- Top artists in the database by # of followers
-- Top songs by artist in terms of tempo
+- Top 10 songs by artist in terms of duration_ms (ordered by artist ASC, duration_ms DESC)  
+- Top 20 artists in the database ordered by # of followers DESC
+- Top 10 songs by artist in terms of tempo (ordered by artist ASC, duration_ms DESC)   
 
 Additionally, think of at least 2 additional views you would like to create that you think could be useful for a data scientist or data analyst.  Combined with the 3 mentioned above, you are required to create at least 5 views.
 
-In addition to views, you will also need to create 3 data visualisations using Python.  You can use any module you want for this.  Python has a number of visualization modules such as `matplotlib` and `seaborn`.  You can create any visualisation you think would help increase insight and understanding into the data.  The `track_feature` table has a number of numeric fields that you could use for this.
+In addition to views, you will also need to create 3 data visualisations using Python.  You can use any module you want for this.  Python has a number of visualization modules such as `matplotlib` and `seaborn`.  You can create any visualisation you think would help increase insight and understanding into the data.  The `track_feature` table has a number of numeric fields that you could use for this.  We will be asking you to submit this as a .pdf file.  Try to picture yourself presenting data to a non-technical person.  As a result, try to focus on your presentation and organization.  Focus on consistent formatting, good use of titles and legends, and other things that will make your submission easy to understand.  
 
 ## Deliverables
-You will submit all deliverables via Github in the `submissions` folder.  If you are not familiar, see the primer info at the bottom of this page.
+You will submit all deliverables via Github in the `submissions` folder.  You can do this by cloning or forking this repo and then commiting your code / files into your repository.  Make sure your name is included somewhere that's easy to find (i.e. in your branch name, fork name, etc). If you are not familiar with how to use Github, see the primer info at the bottom of this page.
 1. Python code for your API calls, transformations, and visualizations.
-    * Implementation for this portion is up to you.  We include a number of hints and suggestions in this document that you can take into consideration.
-    * Your code should be clean, readable, and easy to understand.  In a professional setting this is key because your code will constantly be read and used by others.  Minimize redundant code by using functions when possible.
-2. A SQLite .db file which will contain a database called `spotify.db`
+    * Implementation for this portion is up to you.  You can provide a single python file, multiple python files, create your own modules and import them, etc.  There are no specific requirements in terms of how you organize your python files.  We include a number of hints and suggestions in this document that you can take into consideration.  
+    * Your code should be clean, readable, and easy to understand.  In a professional setting this is key because your code will constantly be read and used by others.  Minimize redundant code by using functions when possible.  
+2. A SQLite .db file which will contain a database called `spotify.db`  
     * This file should contain the following tables: `artist`, `album`, `track`, and `track_feature`.
     * This file should contain 5 views, including 3 from the prompt above and 2 that you come up with yourself.
 3. A pdf called `visualization.pdf` file containing images of your 3 data visualizations you created in Python.
@@ -160,9 +161,9 @@ Alternatively, you can follow along with this tutorial:  https://www.youtube.com
 ### Setting Environment Variables
 As a general rule, you should never hard code your API keys within any of your scripts.  If you do this, you are making yourself vulnerable from a security point of view. **NEVER** store API keys on github or anywhere else that is not secure.  A way around this is to set them as environment variables.  A primer on this topic including code examples for Unix and Windows operating systems can be viewed here: https://en.wikipedia.org/wiki/Environment_variable
 Specifially, you will need to set environment variables for the following:
-    * SPOTIPY_CLIENT_ID
-    * SPOTIPY_CLIENT_SECRET
-    * SPOTIPY_REDIRECT_URI
+    * SPOTIPY_CLIENT_ID  
+    * SPOTIPY_CLIENT_SECRET  
+    * SPOTIPY_REDIRECT_URI  
         
 ### SQLite3 Primer
 In order to make your experience simpler, you will be using SQLite3 as your database for this project.  This is a tool that you will probably not use directly in a professional setting, but we will use it here so you don't have to spend time installing / configuring RDBMS software.  SQLite3 comes pre-installed with Python as a base package and is able to store your entire database within a single file (with a .db extension).  Part of your submission for this project will be a `spotify.db` SQLite file.  This file will contain all of your tables and views that will comprise the bulk of your project.  A primer on this tool is available here: https://docs.python.org/3/library/sqlite3.html
