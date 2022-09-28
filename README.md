@@ -100,7 +100,7 @@ It is not enough to take data and store it in a database, you have to consider h
 As a minimum, you should create views based on the following 3 prompts:
 - Top 10 songs by artist in terms of duration_ms (ordered by artist ASC, duration_ms DESC)  
 - Top 20 artists in the database ordered by # of followers DESC
-- Top 10 songs by artist in terms of tempo (ordered by artist ASC, duration_ms DESC)   
+- Top 10 songs by artist in terms of tempo (ordered by artist ASC, tempo DESC)   
 
 Additionally, think of at least 2 additional views you would like to create that you think could be useful for a data scientist or data analyst.  Combined with the 3 mentioned above, you are required to create at least 5 views.
 
