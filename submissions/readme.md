@@ -65,9 +65,10 @@ The database contains four dimentional tables as shown in the Entity Relational 
 
 ``` bash
 .
-├── Submissions                 # Test files (alternatively `spec` or `tests`)
-│   ├── etl.py                  # Script to Extract, Transform and Load the data
-│   ├── proof_of_concept.ipynb  # Documents the thought process for building the pipeline
+├── Submissions                 # All files for project
+│   ├── etl.py                     # Script to Extract, Transform and Load the data
+│   ├── proof_of_concept.ipynb     # Documents the thought process for building the pipeline
+│   ├── data_visualizations.ipynb  # Contains all code for data visualizations
 │   ├── classes                 # Contains all custom classes used in etl.py
 |   |   ├── data_pull.py                      # Test files (alternatively `spec` or `tests`)
 |   |   ├── db_connection.py                  # Test files (alternatively `spec` or `tests`)
